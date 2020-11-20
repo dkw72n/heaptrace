@@ -1,4 +1,5 @@
 *.o
 *.so
 MallocMon/
+demo
 
