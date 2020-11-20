@@ -19,7 +19,7 @@ wrap.o: wrap.c
 clean:
 	rm -f mtrace.so *.o
 
-test: mtrace.so
+test: mtrace.so 
 	rm MallocMon -rf
-	LD_PRELOAD=`pwd`/mtrace.so MTRACE_SAMPLE_INTERVAL=2 ./demo
+	LD_PRELOAD=`pwd`/mtrace.so MTRACE_SAMPLE_INTERVAL=2 readelf -s --wide mtrace.so | grep -v UND | grep -E 'FUNC\s+GLOBAL\s+DEFAULT'
 

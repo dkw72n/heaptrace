@@ -6,7 +6,7 @@
 #include <unordered_set>
 #include <string>
 #include <ctime>
-// #include <cstring>
+#include <cstring>
 #include <sys/time.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -174,11 +174,13 @@ void* mmtrace_get_client(){
       i = 65536;
     }
   }
-  mkdir("MallocMon", 0666);
+  mkdir("MallocMon", 0775);
   sprintf(dirname, "MallocMon/%d", getpid());
-  mkdir(dirname, 0666);
+  if (mkdir(dirname, 0775)){
+    fprintf(stderr, "[!] failed to mkdir(%s): %s\n", dirname, strerror(errno));
+  }
   sprintf(dirname, "MallocMon/%d/hs", getpid());
-  mkdir(dirname, 0666);
+  mkdir(dirname, 0775);
   if (is_dir(dirname)){
     _Mmtrace* ret = new _Mmtrace(i);
     if (ret->ok()){
@@ -187,6 +189,7 @@ void* mmtrace_get_client(){
     }
     delete ret;
   }
+  fprintf(stderr, "[!] failed to mkdir(%s)\n", dirname);
   return NULL;
 }
 
