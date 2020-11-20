@@ -1,4 +1,8 @@
 #include <string.h>
+
+// for why this file exists
+//  see: https://web.archive.org/web/20201113164614/https://thecharlatan.ch/GLIBC-Back-Compat/
+
 #undef memcpy
 void* memcpy_old(void * dest, const void* src, size_t size);
 #ifdef __i386__
